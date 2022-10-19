@@ -144,10 +144,10 @@ a lot of bad practices in here.
     
     <div class="note">
     
-    The dev mode that is provided quarkus will reload your application
-    every time you change your code. However, it might make RabbitMQ not
-    response to the new message. You can fix this by restarting your
-    Quarkus process.
+    The dev mode that is provided by quarkus will reload your
+    application every time you change your code. However, it might make
+    RabbitMQ not response to the new message. You can fix this by
+    restarting your Quarkus process.
     
     </div>
 

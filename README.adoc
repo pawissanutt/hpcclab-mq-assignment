@@ -70,6 +70,8 @@ quarkus dev
 +
 If every thing work correctly, you should be able to open the dev console via http://localhost:8080/q/dev/.
 Also, you will notice that quarkus will start RabbitMQ container for you automatically.
++
+NOTE: The dev mode that is provided quarkus will reload your application every time you change your code. However, it might make RabbitMQ not response to the new message. You can fix this by restarting your Quarkus process.
 
 . Go to the swagger UI at http://localhost:8080/q/swagger-ui/
 
@@ -105,4 +107,3 @@ GET /results/1
 . Write a simple client side application to sending the request into queue directly.
 
 
-NOTE: The dev mode that is provided quarkus will reload your application every time you change your code. However, it might make RabbitMQ not response to the new message. You can fix this by restarting your Quarkus process.

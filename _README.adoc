@@ -101,6 +101,8 @@ Then you will see the response in the console log.
 ----
 GET /results/1
 ----
++
+With the replace holder code, it will response with `TODO` message.
 
 . Complete this search application by editing link:src/main/java/org/acme/SearchRequestConsumer.java[] in `consume` method.
 

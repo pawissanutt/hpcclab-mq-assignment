@@ -177,6 +177,9 @@ a lot of bad practices in here.
         ``` httprequest
         GET /results/1
         ```
+        
+        With the replace holder code, it will response with `TODO`
+        message.
 
 5.  Complete this search application by editing
     [src/main/java/org/acme/SearchRequestConsumer.java](src/main/java/org/acme/SearchRequestConsumer.java)

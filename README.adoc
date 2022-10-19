@@ -1,0 +1,108 @@
+= Example Quarkus Project With RabbitMQ
+:toc:
+:toc-placement: preamble
+:toclevels: 2
+
+// Need some preamble to get TOC:
+{empty}
+
+== Introduction
+
+This project is for learning how to use RabbitMQ with Quarkus. There are a lot of bad practices in here.
+
+== Prerequisites
+
+* https://adoptium.net/installation[JDK 17+]
+* Set `JAVA_HOME` to JDK location
++
+[source,bash]
+----
+export JAVA_HOME="<replace with your jdk location>"
+----
+* https://quarkus.io/guides/cli-tooling[quarkus cli]
+
+* https://www.docker.com/products/docker-desktop/[Docker Runtime]
+
+== Instructions
+. Create a new project via quarkus cli
++
+[source,bash]
+----
+quarkus create org.acme:cloud-a3-mq --extension="smallrye-reactive-messaging-rabbitmq,resteasy-reactive-jackson,smallrye-openapi"
+----
+
+. Copy the following placeholder files:
+
+.. link:src/main/java/org/acme/SearchRequest.java[]
++
+[source,java]
+----
+include::src/main/java/org/acme/SearchRequest.java[]
+----
+
+.. link:src/main/java/org/acme/SearchRequestConsumer.java[]
++
+[source,java]
+----
+include::src/main/java/org/acme/SearchRequestConsumer.java[]
+----
+
+.. link:src/main/java/org/acme/SearchRequestProducer.java[]
++
+[source,java]
+----
+include::src/main/java/org/acme/SearchRequestProducer.java[]
+----
+
+.. link:src/main/resources/application.properties[]
++
+[source,properties]
+----
+include::src/main/resources/application.properties[]
+----
+
+. Start quarkus server in dev mode
++
+[source,bash]
+----
+quarkus dev
+----
++
+If every thing work correctly, you should be able to open the dev console via http://localhost:8080/q/dev/.
+Also, you will notice that quarkus will start RabbitMQ container for you automatically.
+
+. Go to the swagger UI at http://localhost:8080/q/swagger-ui/
+
+.. You will find the list of exposing API. You can try send the following request:
++
+[source,httprequest]
+----
+POST /search
+content-type: application/json
+
+{
+  "id": "1",
+  "keyword": "test"
+}
+----
++
+Then you will see the response in the console log.
++
+----
+2022-10-18 20:30:58,182 INFO  [org.acm.SearchRequestProducer] (executor-thread-0) produce request SearchRequest{id='1', keyword='test'}
+2022-10-18 20:30:58,265 INFO  [org.acm.SearchRequestConsumer] (vert.x-eventloop-thread-2) receive request SearchRequest{id='1', keyword='test'}
+----
+
+.. To get the result of your request, you have to send the HTTP GET as the following example :
++
+[source,httprequest]
+----
+GET /results/1
+----
+
+. Complete this search application by editing link:src/main/java/org/acme/SearchRequestConsumer.java[] in `consume` method.
+
+. Write a simple client side application to sending the request into queue directly.
+
+
+NOTE: The dev mode that is provided quarkus will reload your application every time you change your code. However, it might make RabbitMQ not response to the new message. You can fix this by restarting your Quarkus process.
